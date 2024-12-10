@@ -1,0 +1,22 @@
+<.header>
+  <%= @recipe.title %>
+  <:subtitle><%= @recipe.description %></:subtitle>
+  <:actions>
+    <.link href={~p"/recipes/#{@recipe}/edit"}>
+      <.button>Edit Recipe</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<div class="mt-8 space-y-6">
+  <.list>
+    <:item title="Created">
+      <%= Calendar.strftime(@recipe.inserted_at, "%B %d, %Y") %>
+    </:item>
+    <:item title="Last Updated">
+      <%= Calendar.strftime(@recipe.updated_at, "%B %d, %Y") %>
+    </:item>
+  </.list>
+</div>
+
+<.back navigate={~p"/recipes"} class="mt-16">Back to Recipes</.back>

@@ -1,11 +1,11 @@
-<.flash_group flash={@flash} />
-<div class="">
-  <div class="mx-auto max-w-2xl lg:mx-0 w-full flex justify-start">
-    <h1 class="text-[2rem] font-semibold leading-10 tracking-tighter text-zinc-900">
-      Recipes
-    </h1>
-  </div>
-</div>
+<.header>
+  Listing Recipes
+  <:actions>
+    <.link href={~p"/recipes/new"}>
+      <.button>New Recipe</.button>
+    </.link>
+  </:actions>
+</.header>
 
 <.table id="recipes" rows={@recipes} row_click={&JS.navigate(~p"/recipes/#{&1}")}>
   <:col :let={recipe} label="Title"><%= recipe.title %></:col>
@@ -22,9 +22,3 @@
     </.link>
   </:action>
 </.table>
-
-<div class="mt-4">
-  <.link href={~p"/recipes/new"}>
-    <.button>New Recipe</.button>
-  </.link>
-</div>

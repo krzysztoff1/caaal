@@ -82,4 +82,10 @@ defmodule CaaalWeb.Router do
       live "/users/confirm", UserConfirmationInstructionsLive, :new
     end
   end
+
+  scope "/recipes", CaaalWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    resources "/", RecipeController, only: [:index, :new, :create, :edit, :update, :show]
+  end
 end
