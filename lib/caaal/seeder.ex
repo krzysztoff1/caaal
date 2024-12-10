@@ -1,5 +1,3 @@
-alias Caaal.Repo
-
 defmodule Caaal.Seeder do
   def seed do
     IO.puts("Seeding database...")
@@ -26,17 +24,13 @@ defmodule Caaal.Seeder do
       %{name: "Rice", unit_type: "gram"},
       %{name: "Pasta", unit_type: "gram"},
       %{name: "Pizza", unit_type: "gram"},
-      %{name: "Salad", unit_type: "gram"},
+      %{name: "Salad", unit_type: "gram"}
     ]
 
-    Enum.each(ingredients, fn ingredient ->
-      if Caaal.Repo.exists?(Caaal.Ingredients.Ingredient, name: ingredient.name) do
-        IO.puts("Ingredient #{ingredient.name} already exists")
-      else
-        Caaal.Repo.insert!(%Caaal.Ingredients.Ingredient{name: ingredient.name, unit_type: ingredient.unit_type})
-        IO.puts("Ingredient #{ingredient.name} created")
-      end
-    end)
+    for ingredient <- ingredients do
+      IO.puts("Seeding ingredient #{ingredient.name}")
+      Caaal.Repo.insert!(%Caaal.Ingredients.Ingredient{name: ingredient.name, unit_type: ingredient.unit_type})
+    end
 
     IO.puts("Database seeded")
   end
