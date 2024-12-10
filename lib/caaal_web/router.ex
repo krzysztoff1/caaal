@@ -88,4 +88,10 @@ defmodule CaaalWeb.Router do
 
     resources "/", RecipeController, only: [:index, :new, :create, :edit, :update, :show, :delete]
   end
+
+  scope "/ingredients", CaaalWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    resources "/", IngredientController, only: [:index, :new, :create, :edit, :update, :show, :delete]
+  end
 end
