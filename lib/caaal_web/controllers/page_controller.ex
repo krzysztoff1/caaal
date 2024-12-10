@@ -5,7 +5,8 @@ defmodule CaaalWeb.PageController do
 
   @spec home(Plug.Conn.t(), any()) :: Plug.Conn.t()
   def home(conn, _params) do
-    recipes = CookBook.list_recipes()
+    current_user = conn.assigns.current_user
+    recipes = CookBook.list_recipes(current_user)
 
     render(conn, :home, recipes: recipes)
   end

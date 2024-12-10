@@ -3,9 +3,11 @@ defmodule CaaalWeb.RecipeController do
 
   alias Caaal.CookBook
   alias Caaal.CookBook.Recipe
+  alias Caaal.Accounts.User
 
   def index(conn, _params) do
-    recipes = CookBook.list_recipes()
+    current_user = conn.assigns.current_user
+    recipes = CookBook.list_recipes(current_user)
     render(conn, :index, recipes: recipes)
   end
 
@@ -15,7 +17,8 @@ defmodule CaaalWeb.RecipeController do
   end
 
   def create(conn, %{"recipe" => recipe_params}) do
-    case CookBook.create_recipe(recipe_params) do
+    current_user = conn.assigns.current_user
+    case CookBook.create_recipe(current_user, recipe_params) do
       {:ok, recipe} ->
         conn
         |> put_flash(:info, "Recipe created successfully.")
@@ -27,18 +30,21 @@ defmodule CaaalWeb.RecipeController do
   end
 
   def show(conn, %{"id" => id}) do
-    recipe = CookBook.get_recipe!(id)
+    current_user = conn.assigns.current_user
+    recipe = CookBook.get_recipe!(current_user, id)
     render(conn, :show, recipe: recipe)
   end
 
   def edit(conn, %{"id" => id}) do
-    recipe = CookBook.get_recipe!(id)
+    current_user = conn.assigns.current_user
+    recipe = CookBook.get_recipe!(current_user, id)
     changeset = CookBook.change_recipe(recipe)
     render(conn, :edit, recipe: recipe, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "recipe" => recipe_params}) do
-    recipe = CookBook.get_recipe!(id)
+    current_user = conn.assigns.current_user
+    recipe = CookBook.get_recipe!(current_user, id)
 
     case CookBook.update_recipe(recipe, recipe_params) do
       {:ok, recipe} ->
@@ -52,7 +58,8 @@ defmodule CaaalWeb.RecipeController do
   end
 
   def delete(conn, %{"id" => id}) do
-    recipe = CookBook.get_recipe!(id)
+    current_user = conn.assigns.current_user
+    recipe = CookBook.get_recipe!(current_user, id)
     {:ok, _recipe} = CookBook.delete_recipe(recipe)
 
     conn

@@ -17,12 +17,14 @@ defmodule Caaal.CookBook do
       [%Recipe{}, ...]
 
   """
-  def list_recipes do
-    Repo.all(Recipe)
+  def list_recipes(user) do
+    Recipe
+    |> where(user_id: ^user.id)
+    |> Repo.all()
   end
 
   @doc """
-  Gets a single recipe.
+  Gets a single recipe belonging to the given user.
 
   Raises `Ecto.NoResultsError` if the Recipe does not exist.
 
@@ -35,7 +37,11 @@ defmodule Caaal.CookBook do
       ** (Ecto.NoResultsError)
 
   """
-  def get_recipe!(id), do: Repo.get!(Recipe, id)
+  def get_recipe!(user, id) do
+    Recipe
+    |> where(user_id: ^user.id)
+    |> Repo.get!(id)
+  end
 
   @doc """
   Creates a recipe.
@@ -49,9 +55,9 @@ defmodule Caaal.CookBook do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_recipe(attrs \\ %{}) do
+  def create_recipe(user, attrs \\ %{}) do
     %Recipe{}
-    |> Recipe.changeset(attrs)
+    |> Recipe.changeset(Map.put(attrs, "user_id", user.id))
     |> Repo.insert()
   end
 

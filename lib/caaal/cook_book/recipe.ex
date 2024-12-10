@@ -5,8 +5,9 @@ defmodule Caaal.CookBook.Recipe do
   schema "recipes" do
     field :description, :string
     field :title, :string
+    belongs_to :user, Caaal.Accounts.User
 
-    timestamps(type: :utc_datetime)
+    timestamps()
   end
 
   @spec changeset(
@@ -26,7 +27,7 @@ defmodule Caaal.CookBook.Recipe do
   @doc false
   def changeset(recipe, attrs) do
     recipe
-    |> cast(attrs, [:title, :description])
-    |> validate_required([:title, :description])
+    |> cast(attrs, [:title, :description, :user_id])
+    |> validate_required([:title, :description, :user_id])
   end
 end
