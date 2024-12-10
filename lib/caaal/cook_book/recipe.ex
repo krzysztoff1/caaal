@@ -5,7 +5,10 @@ defmodule Caaal.CookBook.Recipe do
   schema "recipes" do
     field :description, :string
     field :title, :string
+
     belongs_to :user, Caaal.Accounts.User
+
+    has_many :recipe_ingredients, Caaal.RecipeIngredients.RecipeIngredient
 
     timestamps()
   end

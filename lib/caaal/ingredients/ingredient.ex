@@ -8,6 +8,8 @@ defmodule Caaal.Ingredients.Ingredient do
     field :name, :string
     field :unit_type, :string
 
+    has_many :recipe_ingredients, Caaal.RecipeIngredients.RecipeIngredient
+
     timestamps()
   end
 

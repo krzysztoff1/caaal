@@ -8,6 +8,7 @@ defmodule CaaalWeb.RecipeHTML do
   """
   attr :changeset, Ecto.Changeset, required: true
   attr :action, :string, required: true
+  attr :ingredients, :list, required: true
 
   def recipe_form(assigns)
 end
