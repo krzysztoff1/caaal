@@ -3,7 +3,6 @@ defmodule CaaalWeb.RecipeController do
 
   alias Caaal.CookBook
   alias Caaal.CookBook.Recipe
-  alias Caaal.Accounts.User
 
   def index(conn, _params) do
     current_user = conn.assigns.current_user
